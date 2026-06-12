@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StyleNest Content Manager - Pinterest Integration Demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #e0e0e0; }
+        .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 40px; text-align: center; border-bottom: 2px solid #E60023; }
+        .header h1 { color: #fff; font-size: 32px; margin-bottom: 8px; }
+        .header p { color: #aaa; font-size: 16px; }
+        .badge { display: inline-block; background: #E60023; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; margin-top: 12px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .section { margin-bottom: 60px; }
+        .section h2 { color: #E60023; font-size: 24px; margin-bottom: 20px; border-left: 4px solid #E60023; padding-left: 16px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .card { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 24px; }
+        .card h3 { color: #fff; margin-bottom: 12px; font-size: 18px; }
+        .card p { color: #999; font-size: 14px; line-height: 1.6; }
+        .card .icon { font-size: 32px; margin-bottom: 12px; }
+        .api-list { background: #1a1a1a; border: 1px solid #333; border-radius: 12px; padding: 24px; }
+        .api-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #222; }
+        .api-item:last-child { border-bottom: none; }
+        .method { display: inline-block; min-width: 60px; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; text-align: center; margin-right: 16px; }
+        .method.get { background: #1a5632; color: #4ade80; }
+        .method.post { background: #1e3a5f; color: #60a5fa; }
+        .endpoint { color: #e0e0e0; font-family: 'Courier New', monospace; font-size: 14px; }
+        .desc { color: #777; font-size: 13px; margin-left: auto; }
+        .flow { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; padding: 30px 0; }
+        .flow-step { background: #1a1a2e; border: 1px solid #E60023; border-radius: 8px; padding: 16px 24px; text-align: center; }
+        .flow-step h4 { color: #E60023; margin-bottom: 4px; }
+        .flow-step p { color: #999; font-size: 12px; }
+        .arrow { color: #E60023; font-size: 24px; }
+        .screenshots { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; }
+        .mockup { background: #111; border: 1px solid #333; border-radius: 12px; overflow: hidden; }
+        .mockup-header { background: #222; padding: 8px 16px; display: flex; align-items: center; gap: 8px; }
+        .mockup-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .mockup-dot.red { background: #ff5f57; }
+        .mockup-dot.yellow { background: #febc2e; }
+        .mockup-dot.green { background: #28c840; }
+        .mockup-body { padding: 20px; min-height: 200px; }
+        .mockup-sidebar { display: inline-block; width: 30%; vertical-align: top; }
+        .mockup-main { display: inline-block; width: 68%; margin-left: 2%; vertical-align: top; }
+        .mockup-item { background: #222; border-radius: 6px; padding: 8px; margin-bottom: 6px; font-size: 11px; color: #aaa; }
+        .mockup-card { background: #222; border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+        .mockup-img { height: 80px; background: linear-gradient(135deg, #333, #444); }
+        .mockup-text { padding: 8px; }
+        .mockup-text span { display: block; height: 8px; background: #444; border-radius: 4px; margin-bottom: 4px; }
+        .footer { text-align: center; padding: 40px; color: #555; border-top: 1px solid #222; margin-top: 40px; }
+        .footer a { color: #E60023; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📌 StyleNest Content Manager</h1>
+        <p>Professional Pinterest Content Management Platform for E-Commerce</p>
+        <span class="badge">Pinterest API v5 Integration Demo</span>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>Overview</h2>
+            <p style="color: #bbb; line-height: 1.8; font-size: 15px;">
+                StyleNest Content Manager is a professional tool designed to help e-commerce sellers and digital marketers 
+                manage their Pinterest presence efficiently. Our platform integrates with the Pinterest API v5 to provide 
+                content scheduling, analytics tracking, and board management capabilities.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Core Features</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="icon">📅</div>
+                    <h3>Pin Scheduling</h3>
+                    <p>Schedule Pins to be published at optimal times. Support for bulk scheduling across multiple boards with image uploads and descriptions.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📊</div>
+                    <h3>Analytics Dashboard</h3>
+                    <p>Track Pin performance, engagement rates, and audience growth. Visualize your content strategy effectiveness with detailed charts.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📁</div>
+                    <h3>Board Management</h3>
+                    <p>Organize and manage Pinterest boards. Create, update, and optimize board structures for better content discovery.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">👤</div>
+                    <h3>Account Insights</h3>
+                    <p>Monitor account-level metrics including follower growth, monthly viewers, and engagement trends.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>OAuth Flow</h2>
+            <div class="flow">
+                <div class="flow-step">
+                    <h4>Step 1</h4>
+                    <p>User clicks<br>"Connect Pinterest"</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="flow-step">
+                    <h4>Step 2</h4>
+                    <p>Pinterest OAuth<br>Authorization Page</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="flow-step">
+                    <h4>Step 3</h4>
+                    <p>User grants<br>permissions</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="flow-step">
+                    <h4>Step 4</h4>
+                    <p>Redirect with<br>auth code</p>
+                </div>
+                <div class="arrow">→</div>
+                <div class="flow-step">
+                    <h4>Step 5</h4>
+                    <p>Exchange for<br>access token</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Pinterest API v5 Endpoints Used</h2>
+            <div class="api-list">
+                <div class="api-item">
+                    <span class="method get">GET</span>
+                    <span class="endpoint">/v5/pins</span>
+                    <span class="desc">Read Pin data and analytics</span>
+                </div>
+                <div class="api-item">
+                    <span class="method post">POST</span>
+                    <span class="endpoint">/v5/pins</span>
+                    <span class="desc">Create scheduled Pins</span>
+                </div>
+                <div class="api-item">
+                    <span class="method get">GET</span>
+                    <span class="endpoint">/v5/boards</span>
+                    <span class="desc">List user's boards</span>
+                </div>
+                <div class="api-item">
+                    <span class="method post">POST</span>
+                    <span class="endpoint">/v5/boards</span>
+                    <span class="desc">Create new boards</span>
+                </div>
+                <div class="api-item">
+                    <span class="method get">GET</span>
+                    <span class="endpoint">/v5/user_account</span>
+                    <span class="desc">Read user profile data</span>
+                </div>
+                <div class="api-item">
+                    <span class="method get">GET</span>
+                    <span class="endpoint">/v5/user_account/analytics</span>
+                    <span class="desc">Track performance metrics</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>App Demo Screenshots</h2>
+            <div class="screenshots">
+                <div class="mockup">
+                    <div class="mockup-header">
+                        <span class="mockup-dot red"></span>
+                        <span class="mockup-dot yellow"></span>
+                        <span class="mockup-dot green"></span>
+                    </div>
+                    <div class="mockup-body">
+                        <div class="mockup-sidebar">
+                            <div class="mockup-item">📊 Dashboard</div>
+                            <div class="mockup-item">📅 Schedule</div>
+                            <div class="mockup-item">📁 Boards</div>
+                            <div class="mockup-item">📈 Analytics</div>
+                            <div class="mockup-item">⚙️ Settings</div>
+                        </div>
+                        <div class="mockup-main">
+                            <div class="mockup-card">
+                                <div class="mockup-img" style="background: linear-gradient(135deg, #E60023, #ff4466);"></div>
+                                <div class="mockup-text">
+                                    <span style="width:80%"></span>
+                                    <span style="width:60%"></span>
+                                </div>
+                            </div>
+                            <div class="mockup-card">
+                                <div class="mockup-img" style="background: linear-gradient(135deg, #1a5632, #2d8a56);"></div>
+                                <div class="mockup-text">
+                                    <span style="width:70%"></span>
+                                    <span style="width:50%"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockup">
+                    <div class="mockup-header">
+                        <span class="mockup-dot red"></span>
+                        <span class="mockup-dot yellow"></span>
+                        <span class="mockup-dot green"></span>
+                    </div>
+                    <div class="mockup-body" style="text-align: center; padding-top: 40px;">
+                        <div style="background: #222; border-radius: 12px; padding: 30px; max-width: 280px; margin: 0 auto;">
+                            <div style="font-size: 40px; margin-bottom: 16px;">📌</div>
+                            <div style="color: #fff; font-size: 16px; margin-bottom: 8px;">Connect Pinterest</div>
+                            <div style="color: #666; font-size: 12px; margin-bottom: 20px;">Authorize to manage your pins</div>
+                            <div style="background: #E60023; color: white; padding: 10px; border-radius: 8px; font-size: 13px;">
+                                Continue with Pinterest
+                            </div>
+                            <div style="color: #555; font-size: 10px; margin-top: 12px;">
+                                Scopes: pins:read, pins:write, boards:read, boards:write, user_accounts:read
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Data Handling & Privacy</h2>
+            <div class="card">
+                <p>
+                    StyleNest Content Manager processes Pinterest data solely for the purpose of providing content management features. 
+                    We comply fully with Pinterest Developer Guidelines and API Terms of Service.<br><br>
+                    • We do NOT sell, share, or redistribute any user data to third parties.<br>
+                    • All API tokens are stored securely with encryption at rest.<br>
+                    • Users can revoke access at any time through their Pinterest settings.<br>
+                    • We only request the minimum scopes required for our features.<br>
+                    • Data retention follows our <a href="https://zng8418.github.io/stylenest/privacy" style="color: #E60023;">Privacy Policy</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>StyleNest Digital © 2026 | <a href="https://zng8418.github.io/stylenest/privacy">Privacy Policy</a> | Pinterest App ID: 1579222</p>
+    </div>
+</body>
+</html>
